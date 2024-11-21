@@ -1,4 +1,4 @@
-name: CI
+name: swift-test
 
 on:
   push:
@@ -9,10 +9,11 @@ on:
       - "*"
   workflow_dispatch:
 
+strategy:
+  matrix:
+    os: [macos-13, macos-14, macos-15, ubuntu-latest]
+
 jobs:
-  strategy:
-    matrix:
-      os: [macos-13, macos-14, macos-15, ubuntu-latest]
   swift-build:
     runs-on: ${{ matrix.os }}
     steps:
