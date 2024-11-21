@@ -9,12 +9,12 @@ on:
       - "*"
   workflow_dispatch:
 
-strategy:
-  matrix:
-    os: [macos-13, macos-14, macos-15, ubuntu-latest]
 
 jobs:
   swift-build:
+    strategy:
+      matrix:
+        os: [macos-13, macos-14, macos-15, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
