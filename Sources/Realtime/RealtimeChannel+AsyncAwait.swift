@@ -30,8 +30,9 @@ extension RealtimeChannelV2 {
     table: String? = nil,
     filter: String? = nil
   ) -> AsyncStream<InsertAction> {
-    postgresChange(event: .insert, schema: schema, table: table, filter: filter)
-      .compactMap { $0.wrappedAction as? InsertAction }
+    (postgresChange(event: .insert, schema: schema, table: table, filter: filter)
+      // we need this extra coercion to help Swift on macOS13
+      .compactMap { $0.wrappedAction as? InsertAction } as AsyncCompactMapSequence<AsyncStream<AnyAction>, InsertAction>)
       .eraseToStream()
   }
 
@@ -42,8 +43,8 @@ extension RealtimeChannelV2 {
     table: String? = nil,
     filter: String? = nil
   ) -> AsyncStream<UpdateAction> {
-    postgresChange(event: .update, schema: schema, table: table, filter: filter)
-      .compactMap { $0.wrappedAction as? UpdateAction }
+    (postgresChange(event: .update, schema: schema, table: table, filter: filter)
+      .compactMap { $0.wrappedAction as? UpdateAction } as AsyncCompactMapSequence<AsyncStream<AnyAction>, UpdateAction>)
       .eraseToStream()
   }
 
@@ -54,8 +55,8 @@ extension RealtimeChannelV2 {
     table: String? = nil,
     filter: String? = nil
   ) -> AsyncStream<DeleteAction> {
-    postgresChange(event: .delete, schema: schema, table: table, filter: filter)
-      .compactMap { $0.wrappedAction as? DeleteAction }
+    (postgresChange(event: .delete, schema: schema, table: table, filter: filter)
+      .compactMap { $0.wrappedAction as? DeleteAction } as AsyncCompactMapSequence<AsyncStream<AnyAction>, DeleteAction>)
       .eraseToStream()
   }
 
