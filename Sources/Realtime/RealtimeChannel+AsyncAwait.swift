@@ -125,7 +125,8 @@ extension RealtimeChannelV2 {
 }
 
 fileprivate extension AsyncStream<AnyAction> {
-  func compactErase<T>() -> AsyncStream<T> {
+  // Helper to work around ambiguity in macOS 13
+  func compactErase<T: Sendable>() -> AsyncStream<T> {
     (compactMap { $0.wrappedAction as? T } as AsyncCompactMapSequence<Self, T>)
       .eraseToStream()
   }
