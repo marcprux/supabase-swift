@@ -124,11 +124,10 @@ extension RealtimeChannelV2 {
   }
 }
 
+// Helper to work around type ambiguity in macOS 13
 fileprivate extension AsyncStream<AnyAction> {
-  // Helper to work around ambiguity in macOS 13
   func compactErase<T: Sendable>() -> AsyncStream<T> {
-    (compactMap { $0.wrappedAction as? T } as AsyncCompactMapSequence<Self, T>)
-      .eraseToStream()
+    AsyncStream<T>(compactMap { $0.wrappedAction as? T } as AsyncCompactMapSequence<Self, T>)
   }
 }
 
