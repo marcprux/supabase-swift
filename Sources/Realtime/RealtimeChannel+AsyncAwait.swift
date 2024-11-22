@@ -126,7 +126,8 @@ extension RealtimeChannelV2 {
 
 fileprivate extension AsyncStream<AnyAction> {
   func compactErase<T: PostgresAction>() -> AsyncStream<T> {
-    compactMap { $0.wrappedAction as? T }.eraseToStream()
+    (compactMap { $0.wrappedAction as? T } as AsyncCompactMapSequence<Self, T>)
+      .eraseToStream()
   }
 }
 
