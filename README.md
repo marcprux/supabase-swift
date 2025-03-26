@@ -11,7 +11,7 @@ Supabase client for Swift. Mirrors the design of [supabase-js](https://github.co
 
 ### Requirements
 - iOS 13.0+ / macOS 10.15+ / tvOS 13+ / watchOS 6+ / visionOS 1+
-- Xcode 15.x
+- Xcode 15+
 - Swift 5.9+
 
 > [!IMPORTANT]
@@ -92,7 +92,7 @@ When a platform version is no longer supported, Supabase will drop it in a **min
 For macOS, the named yearly releases are treated as major versions for this policy, regardless of their version numbers.
 
 > [!IMPORTANT]
-> Linux and Windows works but aren't supported, and may stop working on future versions of the library.
+> Android, Linux and Windows works but aren't supported, and may stop working on future versions of the library.
 
 ## Contributing
 
